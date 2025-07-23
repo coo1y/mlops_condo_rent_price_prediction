@@ -1,0 +1,63 @@
+{
+  "resource": "/predict",
+  "path": "/predict",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept": "application/json",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Content-Length": "758",
+    "Content-Type": "application/json",
+    "Host": "your-api-id.execute-api.us-east-1.amazonaws.com",
+    "User-Agent": "PostmanRuntime/7.28.4",
+    "X-Amzn-Trace-Id": "Root=1-60a7e6c0-7f8e9d0c1b2a3e4f5d6c7b8a",
+    "X-Forwarded-For": "192.0.2.1",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "queryStringParameters": null,
+  "multiValueHeaders": {
+    "Accept": ["application/json"],
+    "Accept-Encoding": ["gzip, deflate, br"],
+    "Content-Length": ["758"],
+    "Content-Type": ["application/json"],
+    "Host": ["your-api-id.execute-api.us-east-1.amazonaws.com"],
+    "User-Agent": ["PostmanRuntime/7.28.4"],
+    "X-Amzn-Trace-Id": ["Root=1-60a7e6c0-7f8e9d0c1b2a3e4f5d6c7b8a"],
+    "X-Forwarded-For": ["192.0.2.1"],
+    "X-Forwarded-Port": ["443"],
+    "X-Forwarded-Proto": ["https"]
+  },
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "xxxxxx",
+    "resourcePath": "/predict",
+    "httpMethod": "POST",
+    "extendedRequestId": "xxxxxxxxx=",
+    "requestTime": "17/Jul/2025:02:14:30 +0700",
+    "path": "/predict",
+    "accountId": "123456789012",
+    "protocol": "HTTP/1.1",
+    "stage": "dev",
+    "domainPrefix": "your-api-id",
+    "requestTimeEpoch": 1721169270000,
+    "apiId": "your-api-id",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "192.0.2.1",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "PostmanRuntime/7.28.4",
+      "user": null
+    }
+  },
+  "body": "{\"room_size\": 30.0, \"unit_type\": \"1 Bedroom\", \"air_conditioner\": 1, \"digital_door_lock\": 1, \"furnished\": 1, \"hot_tub\": 0, \"phone\": 0, \"completed_on\": 2005, \"fingerprint_access_control\": 0, \"jacuzzi\": 0, \"kids_playground\": 1, \"library\": 1, \"near_BTSBangWa\": 0, \"near_BTSChitLom\": 0, \"near_BTSChongNonsi\": 1, \"near_BTSKrungThonBuri\": 0, \"near_BTSNationalStadium\": 0, \"near_BTSPhloenChit\": 0, \"near_BTSPhoNimit\": 0, \"near_BTSRatchadamri\": 0, \"near_BTSRatchathewi\": 0, \"near_BTSSaintLouis\": 0, \"near_BTSSalaDaeng\": 1, \"near_BTSSaphanTaksin\": 0, \"near_BTSSiam\": 0, \"near_BTSSurasak\": 0, \"near_BTSTalatPhlu\": 0, \"near_BTSVictoryMonument\": 0, \"near_BTSWongwianYai\": 0, \"near_BTSWutthakat\": 0, \"near_MRTBangPhai\": 0, \"near_MRTBangWa\": 0, \"near_MRTKhlongToei\": 0, \"near_MRTLumphini\": 0, \"near_MRTPhetKasem48\": 0, \"near_MRTSamYan\": 0, \"near_MRTSiLom\": 1, \"near_MRTThaPhra\": 0, \"rent_price\": 13000}",
+  "isBase64Encoded": false
+}

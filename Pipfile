@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+xgboost = "*"
+pandas = "*"
+mlflow = "3.1.1"
+boto3 = "*"
+deepdiff = "*"
+pydantic = "*"
+
+[dev-packages]
+requests = "*"
+scikit-learn = "*"
+pytest = "*"
+numpy = "*"
+black = "*"
+isort = "*"
+pre-commit = "*"
+boto3 = "*"
+pylint = "*"
+hyperopt = "*"
+prefect = "*"
+openpyxl = "*"
+python-dotenv = "*"
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+localstack = "./localstack start --host"
