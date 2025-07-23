@@ -46,10 +46,9 @@ jobs:
      - name: Build Docker image and push to ECR
        id: build-push
        env:
-         ECR_REPOSITORY_URL: ${{ env.ECR_REPO_URL }}
          IMAGE_TAG: "latest"
        run: |
-         docker build -t "img_name:${{ env.IMAGE_TAG }}" .
+         docker build --platform linux/arm64 -t "img_name:${{ env.IMAGE_TAG }}" .
          docker tag "img_name:${{ env.IMAGE_TAG }}" "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_ECR_REPO }}:${{ env.IMAGE_TAG }}"
          docker push "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_ECR_REPO }}:${{ env.IMAGE_TAG }}"
 
