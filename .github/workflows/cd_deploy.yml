@@ -26,8 +26,6 @@ jobs:
          aws-region: ${{ env.AWS_REGION }}
 
      - uses: hashicorp/setup-terraform@v2
-       with:
-         terraform_wrapper: false
      - name: Terraform plan
        id: tf-plan
        working-directory: 'inference/infrastructure/'
