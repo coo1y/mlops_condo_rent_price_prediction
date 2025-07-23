@@ -7,29 +7,29 @@ repos:
     - id: trailing-whitespace
     - id: end-of-file-fixer
     - id: check-yaml
-    # - id: check-added-large-files
-# - repo: https://github.com/pycqa/isort
-#   rev: 5.12.0
-#   hooks:
-#     - id: isort
-#       name: isort (python)
-# - repo: https://github.com/psf/black
-#   rev: 22.6.0
-#   hooks:
-#     - id: black
-#       language_version: python3.10.0
-# - repo: local
-#   hooks:
-#     - id: pylint
-#       name: pylint
-#       entry: pipenv run pylint
-#       language: system
-#       types: [python]
-#       args: [
-#         "-rn", # Only display messages
-#         "-sn", # Don't display the score
-#         "--recursive=y"
-#       ]
+    - id: check-added-large-files
+- repo: https://github.com/pycqa/isort
+  rev: 5.12.0
+  hooks:
+    - id: isort
+      name: isort (python)
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+    - id: black
+      language_version: python3.10.0
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint
+      entry: pipenv run pylint
+      language: system
+      types: [python]
+      args: [
+        "-rn", # Only display messages
+        "-sn", # Don't display the score
+        "--recursive=y"
+      ]
 - repo: local
   hooks:
     - id: pytest-check
