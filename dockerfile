@@ -1,4 +1,5 @@
 FROM public.ecr.aws/lambda/python:3.10
+# FROM --platform=linux/amd64 public.ecr.aws/lambda/python:3.10
 
 RUN pip install -U pip
 RUN pip install pipenv
