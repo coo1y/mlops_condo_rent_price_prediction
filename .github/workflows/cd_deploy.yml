@@ -45,14 +45,12 @@ jobs:
      - name: Build Docker image and push to ECR
        id: build-push
        env:
-         ECR_REPOSITORY: ${{ steps.tf-apply-1.outputs.ecr_repository_url }}
-         LOCAL_IMAGE_NAME: 'lambda-function-condo4rent'
+         ECR_REPOSITORY_URL: ${{ steps.tf-apply-1.outputs.ecr_repository_url }}
          IMAGE_TAG: "latest"
        run: |
-         docker build -t ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} -f dockerfile .
-         docker tag ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} ${ECR_REPOSITORY}:${TAG}
-         docker push ${ECR_REPOSITORY}:${TAG}
-         echo "::set-output name=image_uri::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+         echo "${ECR_REPOSITORY_URL} : ${IMAGE_TAG}"
+         docker build -t ${ECR_REPOSITORY_URL}:${IMAGE_TAG} -f dockerfile .
+         docker push $ECR_REPOSITORY_URL:$IMAGE_TAG
 
      - name: Terraform apply (Step2 Lambda)
        id: tf-apply-2
