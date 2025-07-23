@@ -19,6 +19,10 @@ variable "lambda_image_tag" {
     default     = "latest"
 }
 
+variable "mlflow_tracking_dns" {
+    description = "Enter the DNS for MLflow tracking server"
+}
+
 variable "step" {
     description = "Step number to control resource creation"
     type        = number

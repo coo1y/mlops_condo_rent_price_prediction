@@ -4,13 +4,13 @@ resource "aws_lambda_function" "test_function" {
   timeout       = 30 # seconds
   image_uri     = "${aws_ecr_repository.ecr_repo_image.repository_url}:${var.lambda_image_tag}"
   package_type  = "Image"
-  architectures = ["arm64"]
+  # architectures = ["arm64"]
 
   role = aws_iam_role.test_function_role.arn
 
   environment {
     variables = {
-      SOME_ENV_V = var.env_name
+      MLFLOW_TRACKING_DNS = var.mlflow_tracking_dns
     }
   }
 }

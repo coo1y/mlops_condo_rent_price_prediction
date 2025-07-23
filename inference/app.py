@@ -5,7 +5,6 @@ from pprint import pprint
 from typing import Any, Dict
 
 import mlflow
-from dotenv import load_dotenv
 from model.request import RequestBody
 from model.response import ResponseBody
 from predictor import CondoRentPredictor
@@ -36,7 +35,9 @@ def return_model_artifact():
             model = pickle.load(file)
     else:
         ## otherwise, load the registered model from MLFlow server
-        load_dotenv()
+        from dotenv import find_dotenv, load_dotenv
+
+        load_dotenv(find_dotenv())
         mlflow_endpoint = os.environ.get("MLFLOW_TRACKING_DNS", "127.0.0.1")
         mlflow.set_tracking_uri(f"http://{mlflow_endpoint}:5000")
 
