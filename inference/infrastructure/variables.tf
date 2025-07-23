@@ -22,4 +22,5 @@ variable "lambda_image_tag" {
 variable "step" {
     description = "Step number to control resource creation"
     type        = number
+    default     = 2
 }
