@@ -30,14 +30,14 @@ jobs:
        id: tf-plan
        working-directory: 'inference/infrastructure/'
        run: |
-         terraform init && terraform plan -var-file=prod.tfvars
+         terraform init && terraform plan -var "mlflow_tracking_dns=${{ env.MLFLOW_TRACKING_DNS }}" -var-file=prod.tfvars
 
      - name: Terraform apply (Step1 ECR)
        id: tf-apply-1
        working-directory: 'inference/infrastructure/'
        if: ${{ steps.tf-plan.outcome }} == 'success'
        run: |
-         terraform apply -auto-approve -var-file=prod.tfvars -var "step=1"
+         terraform apply -auto-approve -var-file=prod.tfvars -var "step=1" -var "mlflow_tracking_dns=${{ env.MLFLOW_TRACKING_DNS }}"
 
      - name: Login to Amazon ECR
        id: login-ecr
@@ -56,4 +56,4 @@ jobs:
        id: tf-apply-2
        working-directory: 'inference/infrastructure/'
        run: |
-         terraform apply -auto-approve -var-file=prod.tfvars -var "step=2"
+         terraform apply -auto-approve -var-file=prod.tfvars -var "step=2" -var "mlflow_tracking_dns=${{ env.MLFLOW_TRACKING_DNS }}"
