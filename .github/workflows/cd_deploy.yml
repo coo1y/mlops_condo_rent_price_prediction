@@ -24,6 +24,8 @@ jobs:
          aws-region: ${{ env.AWS_REGION }}
 
      - uses: hashicorp/setup-terraform@v2
+       with:
+         terraform_wrapper: false
      - name: Terraform plan
        id: tf-plan
        working-directory: 'inference/infrastructure/'
@@ -36,7 +38,11 @@ jobs:
        if: ${{ steps.tf-plan.outcome }} == 'success'
        run: |
          terraform apply -auto-approve -var-file=prod.tfvars -var "step=1"
-         echo "::set-output name=ecr_repository_url::$(terraform output ecr_repository_url | xargs)"
+
+     - name: Capture Terraform Outputs
+       run: |
+              ECR_REPO_URL=$(terraform output -raw ecr_repository_url 2>/dev/null || echo "")
+              echo "ECR_REPO_URL=$ECR_REPO_URL" >> $GITHUB_ENV
 
      - name: Login to Amazon ECR
        id: login-ecr
@@ -45,7 +51,7 @@ jobs:
      - name: Build Docker image and push to ECR
        id: build-push
        env:
-         ECR_REPOSITORY_URL: ${{ steps.tf-apply-1.outputs.ecr_repository_url }}
+         ECR_REPOSITORY_URL: ${{ env.ECR_REPO_URL }}
          IMAGE_TAG: "latest"
        run: |
          docker build -t "${{ env.ECR_REPOSITORY_URL }}:${{ env.IMAGE_TAG }}" .
