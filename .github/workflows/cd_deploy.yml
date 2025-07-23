@@ -48,8 +48,8 @@ jobs:
          ECR_REPOSITORY_URL: ${{ steps.tf-apply-1.outputs.ecr_repository_url }}
          IMAGE_TAG: "latest"
        run: |
-         docker build -t ${ECR_REPOSITORY_URL}:${IMAGE_TAG} -f dockerfile .
-         docker push $ECR_REPOSITORY_URL:$IMAGE_TAG
+         docker build -t "${{ env.ECR_REPOSITORY_URL }}:${{ env.IMAGE_TAG }}" .
+         docker push "${{ env.ECR_REPOSITORY_URL }}:${{ env.IMAGE_TAG }}"
 
      - name: Terraform apply (Step2 Lambda)
        id: tf-apply-2
