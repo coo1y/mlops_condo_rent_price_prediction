@@ -19,7 +19,7 @@ jobs:
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
         with:
-          python-version: 3.10
+          python-version: '3.10'
           architecture: 'arm64'
 
       - name: Install dependencies
@@ -57,4 +57,4 @@ jobs:
       - name: Terraform plan
         working-directory: 'inference/infrastructure/'
         run: |
-          terraform init && terraform plan -auto-approve -var-file=prod.tfvars -out=tfplan
+          terraform init && terraform plan -var-file=prod.tfvars
