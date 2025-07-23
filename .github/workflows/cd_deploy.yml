@@ -33,9 +33,9 @@ jobs:
      - name: Terraform apply (Step1 ECR)
        id: tf-apply-1
        working-directory: 'inference/infrastructure/'
-    #    if: ${{ steps.tf-plan.outcome }} == 'success'
+       if: ${{ steps.tf-plan.outcome }} == 'success'
        run: |
-         terraform apply -auto-approve -var "step=1" -var-file=prod.tfvars
+         terraform apply -auto-approve -var-file=prod.tfvars -var "step=1"
          echo "::set-output name=ecr_repository_url::$(terraform output ecr_repository_url | xargs)"
 
      - name: Login to Amazon ECR
@@ -49,7 +49,7 @@ jobs:
          LOCAL_IMAGE_NAME: 'lambda-function-condo4rent'
          IMAGE_TAG: "latest"
        run: |
-         docker build -t ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} . -f dockerfile .
+         docker build -t ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} -f dockerfile .
          docker tag ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} ${ECR_REPOSITORY}:${TAG}
          docker push ${ECR_REPOSITORY}:${TAG}
          echo "::set-output name=image_uri::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
