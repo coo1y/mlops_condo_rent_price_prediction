@@ -56,4 +56,4 @@ jobs:
        id: tf-apply-2
        working-directory: 'inference/infrastructure/'
        run: |
-         terraform apply -auto-approve -var "step=2" -var-file=prod.tfvars
+         terraform apply -auto-approve -var-file=prod.tfvars -var "step=2"
