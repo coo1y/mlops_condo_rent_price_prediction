@@ -1,8 +1,5 @@
 name: CI-test
 on:
-  push:
-    branches:
-      - 'dev'
   pull_request:
     branches:
       - 'main'
@@ -10,7 +7,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: 'ap-southeast-7'
-  MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+  MLFLOW_TRACKING_DNS: ${{ secrets.MLFLOW_TRACKING_DNS }}
 
 jobs:
   testing:
@@ -20,9 +17,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Python 3.10
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.10
+          python-version: '3.10'
+          architecture: 'x64'
 
       - name: Install dependencies
         run: pip install pipenv && pipenv install --dev
@@ -59,4 +57,4 @@ jobs:
       - name: Terraform plan
         working-directory: 'inference/infrastructure/'
         run: |
-          terraform init && terraform plan -auto-approve -var-file=prod.tfvars -out=tfplan
+          terraform init && terraform plan -var-file=prod.tfvars
