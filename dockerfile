@@ -7,6 +7,11 @@ COPY ["Pipfile", "Pipfile.lock", "./"]
 RUN pipenv install --system --deploy
 
 COPY ["inference/app.py", "inference/predictor.py", "./"]
-COPY ["inference/model/", "inference/utils/", "./"]
+
+RUN mkdir model
+COPY ["inference/model", "./model"]
+
+RUN mkdir utils
+COPY ["inference/utils", "./utils"]
 
 CMD [ "app.handler" ]
