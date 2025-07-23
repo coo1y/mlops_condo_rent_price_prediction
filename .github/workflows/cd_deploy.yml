@@ -6,7 +6,9 @@ on:
 env:
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    AWS_REGION: 'ap-southeast-7'
+    AWS_REGION: ${{ secrets.AWS_REGION }}
+    AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+    AWS_ECR_REPO: ${{ secrets.AWS_ECR_REPO }}
     MLFLOW_TRACKING_DNS: ${{ secrets.MLFLOW_TRACKING_DNS }}
 
 jobs:
@@ -33,10 +35,9 @@ jobs:
      - name: Terraform apply (Step1 ECR)
        id: tf-apply-1
        working-directory: 'inference/infrastructure/'
-    #    if: ${{ steps.tf-plan.outcome }} == 'success'
+       if: ${{ steps.tf-plan.outcome }} == 'success'
        run: |
-         terraform apply -auto-approve -var "step=1" -var-file=prod.tfvars
-         echo "::set-output name=ecr_repository_url::$(terraform output ecr_repository_url | xargs)"
+         terraform apply -auto-approve -var-file=prod.tfvars -var "step=1"
 
      - name: Login to Amazon ECR
        id: login-ecr
@@ -45,17 +46,15 @@ jobs:
      - name: Build Docker image and push to ECR
        id: build-push
        env:
-         ECR_REPOSITORY: ${{ steps.tf-apply-1.outputs.ecr_repository_url }}
-         LOCAL_IMAGE_NAME: 'lambda-function-condo4rent'
+         ECR_REPOSITORY_URL: ${{ env.ECR_REPO_URL }}
          IMAGE_TAG: "latest"
        run: |
-         docker build -t ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} . -f dockerfile .
-         docker tag ${LOCAL_IMAGE_NAME}:${IMAGE_TAG} ${ECR_REPOSITORY}:${TAG}
-         docker push ${ECR_REPOSITORY}:${TAG}
-         echo "::set-output name=image_uri::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+         docker build -t "img_name:${{ env.IMAGE_TAG }}" .
+         docker tag "img_name:${{ env.IMAGE_TAG }}" "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_ECR_REPO }}:${{ env.IMAGE_TAG }}"
+         docker push "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.AWS_ECR_REPO }}:${{ env.IMAGE_TAG }}"
 
      - name: Terraform apply (Step2 Lambda)
        id: tf-apply-2
        working-directory: 'inference/infrastructure/'
        run: |
-         terraform apply -auto-approve -var "step=2" -var-file=prod.tfvars
+         terraform apply -auto-approve -var-file=prod.tfvars -var "step=2"

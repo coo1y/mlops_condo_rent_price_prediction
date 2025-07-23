@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "test_function" {
   count         = var.step >= 2 ? 1 : 0
-  function_name = "${lambda_function_prefix_name}-${var.env_name}"
+  function_name = "${var.lambda_function_prefix_name}-${var.env_name}"
   timeout       = 30 # seconds
   image_uri     = "${aws_ecr_repository.ecr_repo_image.repository_url}:${var.lambda_image_tag}"
   package_type  = "Image"
