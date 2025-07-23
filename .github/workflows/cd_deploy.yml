@@ -6,7 +6,9 @@ on:
 env:
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    AWS_REGION: 'ap-southeast-7'
+    AWS_REGION: ${{ secrets.AWS_REGION }}
+    AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+    AWS_ECR_REPO: ${{ secrets.AWS_ECR_REPO }}
     MLFLOW_TRACKING_DNS: ${{ secrets.MLFLOW_TRACKING_DNS }}
 
 jobs:
@@ -39,11 +41,6 @@ jobs:
        run: |
          terraform apply -auto-approve -var-file=prod.tfvars -var "step=1"
 
-     - name: Capture Terraform Outputs
-       run: |
-              ECR_REPO_URL=$(terraform output -raw ecr_repository_url 2>/dev/null || echo "")
-              echo "ECR_REPO_URL=$ECR_REPO_URL" >> $GITHUB_ENV
-
      - name: Login to Amazon ECR
        id: login-ecr
        uses: aws-actions/amazon-ecr-login@v1
@@ -54,8 +51,9 @@ jobs:
          ECR_REPOSITORY_URL: ${{ env.ECR_REPO_URL }}
          IMAGE_TAG: "latest"
        run: |
-         docker build -t "${{ env.ECR_REPOSITORY_URL }}:${{ env.IMAGE_TAG }}" .
-         docker push "${{ env.ECR_REPOSITORY_URL }}:${{ env.IMAGE_TAG }}"
+         docker build -t "img_name:${{ env.IMAGE_TAG }}" .
+         docker tag "img_name:${{ env.IMAGE_TAG }}" "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_ECR_REGION }}.amazonaws.com/${{ env.AWS_ECR_REPO }}:${{ env.IMAGE_TAG }}"
+         docker push "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_ECR_REGION }}.amazonaws.com/${{ env.AWS_ECR_REPO }}:${{ env.IMAGE_TAG }}"
 
      - name: Terraform apply (Step2 Lambda)
        id: tf-apply-2
