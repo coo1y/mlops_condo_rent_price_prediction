@@ -37,7 +37,7 @@ def return_model_artifact():
     else:
         ## otherwise, load the registered model from MLFlow server
         load_dotenv()
-        mlflow_endpoint = os.environ.get("EC2_PUBLIC_DNS", "127.0.0.1")
+        mlflow_endpoint = os.environ.get("MLFLOW_TRACKING_DNS", "127.0.0.1")
         mlflow.set_tracking_uri(f"http://{mlflow_endpoint}:5000")
 
         stage = "prod"
