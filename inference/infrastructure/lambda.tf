@@ -4,9 +4,8 @@ resource "aws_lambda_function" "test_function" {
   timeout       = 30 # seconds
   image_uri     = "${aws_ecr_repository.ecr_repo_image.repository_url}:${var.lambda_image_tag}"
   package_type  = "Image"
+  role          = aws_iam_role.condo4rent_lambda_role.arn
   # architectures = ["arm64"]
-
-  role = aws_iam_role.test_function_role.arn
 
   environment {
     variables = {
@@ -15,8 +14,8 @@ resource "aws_lambda_function" "test_function" {
   }
 }
 
-resource "aws_iam_role" "test_function_role" {
-  name = "test-${var.env_name}"
+resource "aws_iam_role" "condo4rent_lambda_role" {
+  name = "condo4rent-lambda-${var.env_name}"
 
   assume_role_policy = jsonencode({
     Statement = [
@@ -29,4 +28,9 @@ resource "aws_iam_role" "test_function_role" {
       },
     ]
   })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution_policy" {
+  role       = aws_iam_role.condo4rent_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
