@@ -57,4 +57,4 @@ jobs:
       - name: Terraform plan
         working-directory: 'inference/infrastructure/'
         run: |
-          terraform init && terraform plan -var-file=prod.tfvars
+          terraform init && terraform plan -var "mlflow_tracking_dns=${{ env.MLFLOW_TRACKING_DNS }}" -var-file=prod.tfvars

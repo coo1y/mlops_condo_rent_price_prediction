@@ -1,5 +1,10 @@
 *.DS_Store
 
+# Terraform
+.terraform*
+*.tfstate
+*.tfstate.*
+
 # model for test locally
 *.pkl
 
