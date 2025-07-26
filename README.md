@@ -2,7 +2,7 @@
 
 ## 📄 Project Overview
 
-This project focuses on building an MLOps pipeline to predict condominium rental prices in Bangkok. The primary goal is to provide users with a predicted rent price, along with the percentage change relative to the actual rental price, offering valuable insights for the real estate market.
+This project focuses on building an MLOps pipeline to predict condominium rental prices in Bangkok. The primary goal is to provide users with a predicted rent price, along with the percentage change relative to the actual rental price, offering valuable insights for the real estate market. The prediction can be displayed with an actual rent price. This is advantageous to users who want to find a condo for rent to live in Bangkok with appropriate rent price.
 
 This project is from the course organized by [DataTalks.Club](https://datatalks.club). Appreciated the instructors put so much effort on this course, so I can learnt MLOps related skillsets. You can refer the MLOps Zoomcamp here [link](https://github.com/DataTalksClub/mlops-zoomcamp).
 
@@ -100,7 +100,7 @@ Follow these steps to set up the project environment:
 
 1.  **Clone the repository:**
 ```bash
-git clone [https://github.com/coo1y/mlops_condo_rent_price_prediction.git](https://github.com/coo1y/mlops_condo_rent_price_prediction.git)
+git clone https://github.com/coo1y/mlops_condo_rent_price_prediction.git
 cd mlops_condo_rent_price_prediction
 ```
 
@@ -281,8 +281,15 @@ This is an example of a response of the AWS Lambda function:
 
 * **`pct_diff`** (Numerical): This stands for "percentage difference." It quantifies the absolute percentage difference between the `rent_price` (actual) and the `predicted_rent_price`. This metric directly fulfills the project's requirement to show the deviation of the predicted price from the actual price, providing an immediate understanding of the model's accuracy for that specific data point. A lower `pct_diff` indicates a more accurate prediction.
 
+### Usage
+
+This is how we use this in term of API (integrated with Amazon API Gateway):
+
+![POSTMAN Usage](image/usage.png)
+
 ### Further Improvements
 - **Integration Test:** Using LocalStack to mock the integration between the AWS servers
 - **Model Monitoring:** Using Evidently to create relevant metrics and Grafana to visualize these metrics
 - **AWS Services:** AWS Secret Manager for better security in environment variables and Amazon API Gateway to create integration for APIs
+- **Terraform:** Improving the IaC framework to other services such as EC2, S3, RDS for MLFlow, Amazon API Gateway
 - **Front End:** Creating a UI to show the result with appropriate alignment
