@@ -8,7 +8,7 @@ terraform {
   backend "s3" {
     bucket  = "condo4rent-terraform-state"
     key     = "condo4rent-prod.tfstate"
-    region  = var.aws_region
+    region  = "ap-southeast-7"
     encrypt = true
   }
 
