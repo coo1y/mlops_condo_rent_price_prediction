@@ -4,30 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-xgboost = "*"
-pandas = "*"
+pandas = "2.3.1"
+numpy = "2.2.6"
 mlflow = "3.1.1"
-boto3 = "*"
-deepdiff = "*"
-pydantic = "*"
-python-dotenv = "*"
+pydantic = "2.11.7"
+python-dotenv = "1.1.1"
+scikit-learn = "1.7.1"
 
 [dev-packages]
-requests = "*"
-scikit-learn = "*"
-pytest = "*"
-numpy = "*"
-black = "*"
-isort = "*"
-pre-commit = "*"
-pylint = "*"
-hyperopt = "*"
-prefect = "*"
-openpyxl = "*"
-python-dotenv = "*"
+requests = "2.32.4"
+pytest = "8.4.1"
+black = "25.1.0"
+isort = "6.0.1"
+pre-commit = "4.2.0"
+pylint = "3.3.7"
+hyperopt = "0.2.7"
+prefect = "3.4.10"
+openpyxl = "3.1.5"
 
 [requires]
 python_version = "3.10"
-
-[scripts]
-localstack = "./localstack start --host"
