@@ -38,5 +38,5 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution_policy" {
 
 resource "aws_iam_role_policy_attachment" "s3_read_only_policy" {
   role       = aws_iam_role.condo4rent_lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonS3ReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
