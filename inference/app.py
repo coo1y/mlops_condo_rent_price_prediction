@@ -26,11 +26,14 @@ def get_request_payload(event: Dict[str, Any]) -> RequestBody:
 
 
 def return_model_artifact():
-    current_path = os.path.dirname(__file__)
-    model_file = os.path.join(current_path, "condo4rent.pkl")
+    if os.path.exists("/var/task"):  # This is for Lambda environment
+        model_file = os.path.join("/tmp", "condo4rent.pkl")
+    else:
+        current_path = os.path.dirname(__file__)
+        model_file = os.path.join(current_path, "condo4rent.pkl")
 
     if os.path.exists(model_file):
-        ## if the model already exist/loaded, get it from local
+        ## if the model already exist/loaded, get it from a downloaded file
         with open(model_file, "rb") as file:
             model = pickle.load(file)
     else:
